@@ -2,6 +2,7 @@
 #include <sstream>
 #include <cctype>
 #include <algorithm>
+#include <set>
 #include "util.h"
 
 using namespace std;
@@ -15,16 +16,27 @@ std::string convToLower(std::string src)
     to a set of words based on the criteria given in the assignment **/
 std::set<std::string> parseStringToWords(string rawWords)
 {
+    set<std::string> key;
+    trim(rawWords); //watch out
+    stringstream ss(rawWords);
 
-
-
-
-
-
-
-
-
-
+    while(ss.peek() != EOF) { //NOT YET DEBUGGED!!
+        string k = "";
+        while (ss.peek() != '.' && ss.peek() != '\'' && ss.peek() != ' ' && ss.peek() != EOF) {
+            char cur = tolower(ss.get());
+            k += cur;
+        }
+        //std::cout << k << std::endl;
+        if (k.size() >= 2) key.insert(k);
+        //previous while loop guarantees stop on ., ', or EOF
+        while (ss.peek() == '.' || ss.peek() == '\'' || ss.peek() == ' ') {
+            ss.get();
+        } 
+        //cycles until eof or next char that isn't . or '
+    }
+    //std::set<std::string>::iterator it;
+    //for (it = key.begin(); it != key.end(); ++it) std::cout << *it << "yeah" << std::endl;
+    return key;
 }
 
 /**************************************************
